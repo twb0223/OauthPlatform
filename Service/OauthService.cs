@@ -130,7 +130,7 @@ namespace Service
 
             //创建OpenID
             var OpenID = Guid.NewGuid().ToString("N");
-            //写入数据库
+            //写入数据库 todo
 
             //将Code与OpenID的对应关系写入缓存。
             RedisManager.SetStringKey(code, OpenID, ts);
