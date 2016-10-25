@@ -51,10 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Redis\ConfigurationHelper.cs" />
-    <Compile Include="Redis\IRedisClient.cs" />
-    <Compile Include="Redis\RedisClient.cs" />
-    <Compile Include="Redis\RedisClientConfigurations.cs" />
+    <Compile Include="Redis\RedisManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
