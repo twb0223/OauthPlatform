@@ -145,7 +145,7 @@ namespace Service
         public string GetOpenID(string token, string code)
         {
             ///读取缓存得到Openid
-            var OpenID = RedisManager.GetStringKey(code);
+            var OpenID = RedisManager.GetStringKey(code); 
             return OpenID;
         }
         /// <summary>
