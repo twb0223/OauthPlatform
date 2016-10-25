@@ -88,7 +88,7 @@ namespace Service
             int.TryParse(arr[1], out hour);
             int.TryParse(arr[2], out min);
             int.TryParse(arr[3], out min);
-            TimeSpan ts = new TimeSpan(day,hour,min,ms);//默认是一周过期时间
+            TimeSpan ts = new TimeSpan(day, hour, min, ms);//默认是一周过期时间
 
             RedisManager.SetStringKey(AppID, token, ts);
             return token;
@@ -125,7 +125,15 @@ namespace Service
             int.TryParse(arr[3], out min);
             TimeSpan ts = new TimeSpan(day, hour, min, ms);//默认是一周过期时间
 
-            RedisManager.SetStringKey(AppID + "_" + UserID, code,ts);
+            //存储code
+            RedisManager.SetStringKey(AppID + "_" + UserID, code, ts);
+
+            //创建OpenID
+            var OpenID = Guid.NewGuid().ToString("N");
+            //写入数据库
+
+            //将Code与OpenID的对应关系写入缓存。
+            RedisManager.SetStringKey(code, OpenID, ts);
             return code;
         }
         /// <summary>
@@ -136,8 +144,9 @@ namespace Service
         /// <returns></returns>
         public string GetOpenID(string token, string code)
         {
-
-            return "";
+            ///读取缓存得到Openid
+            var OpenID = RedisManager.GetStringKey(code);
+            return OpenID;
         }
         /// <summary>
         /// 检查Token和Openid

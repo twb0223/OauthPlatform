@@ -84,8 +84,7 @@ namespace ApiPlatform.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
-        public JsonResult GetCode(OAuthModel model)
+        public JsonResult GetCode(string AppID,string UserID)
         {
             JsonResult result = new JsonResult();
             OauthService os = new OauthService();
@@ -93,27 +92,13 @@ namespace ApiPlatform.Controllers
             string userCode = "";
             string code = StausCode.Ok;
             string msg = StausCode.OkMsg;
-            //1.验证,检查数据库中是否有这个Appid 和appsecret的应用
-            if (os.CheckApp(model.AppId, model.AppSecret))
+
+            userCode = os.GetUserCode(AppID, UserID);
+            if (string.IsNullOrEmpty(userCode))
             {
-                //2.如果数据库中有这个应用，则接着在缓存中找token和UserCode,如果缓存中有token+usercode，则直接返回Token+userCode，否则先生成token+UserCode
-                token = os.GetToken(model.AppId);
-                if (string.IsNullOrEmpty(token))
-                {
-                    token = os.CreateToken(model.AppId);//创建token
-                }
-                ////判断Usercode是否存在，不存在说明过期了。则重新生成。
-                userCode = os.GetUserCode(model.AppId, model.UserID);
-                if (string.IsNullOrEmpty(userCode))
-                {
-                    userCode = os.CreateUserCode(model.AppId, model.UserID);//创建UserCode 
-                }
+                userCode = os.CreateUserCode(AppID, UserID);//创建UserCode 
             }
-            else
-            {
-                //3.如果不存在则直接返回appid不合法
-                code = StausCode.AppIDSecretErr; msg = StausCode.AppIDSecretErrMsg;
-            }
+         
             result.Data = new { StausCode = code, StatusMsg = msg, Token = token, UserCode = userCode };
             return result;
         }
