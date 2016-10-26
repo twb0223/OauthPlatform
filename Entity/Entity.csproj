@@ -40,12 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MircoApp.cs" />
-    <Compile Include="BaseModel.cs" />
-    <Compile Include="OAuthModel.cs" />
+    <Compile Include="OpenPlatformMicroApplication\OpenPlatformMicroApplication.cs" />
+    <Compile Include="OpenUserHeads\OpenUserHeads.cs" />
+    <Compile Include="ResponeBaseModel.cs" />
+    <Compile Include="OpenPlatformMicroApplication\OpenPlatformMicroApplicationDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestOpenIDModel.cs" />
     <Compile Include="StausCode.cs" />
+    <Compile Include="TokenAndCode\RequestOpenIDDto.cs" />
+    <Compile Include="TokenAndCode\RequestTokenDto.cs" />
+    <Compile Include="TokenAndCode\RequstCodeDto.cs" />
+    <Compile Include="TokenAndCode\ResponeCodeDto.cs" />
+    <Compile Include="TokenAndCode\ResponeOpenIDDto.cs" />
+    <Compile Include="TokenAndCode\ResponeTokenDto.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

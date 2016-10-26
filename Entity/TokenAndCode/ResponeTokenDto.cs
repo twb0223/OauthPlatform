@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Entity
 {
-    public class RequestOpenIDModel
+    public class ResponeTokenDto:ResponeBaseModel
     {
         public string Token { get; set; }
-        public string UserCode { get; set; }
     }
 }

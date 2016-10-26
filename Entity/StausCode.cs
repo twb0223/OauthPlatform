@@ -42,7 +42,7 @@ namespace Entity
         /// <summary>
         /// Token过期
         /// </summary>
-        public const string TokenIsOutTime = "2001";
-        public const string TokenIsOutTimeMsg = "Token过期";
+        public const string TokenOrOpenIDError = "2001";
+        public const string TokenOrOpenIDErrorMsg = "Token或OpenId无效";
     };
 }

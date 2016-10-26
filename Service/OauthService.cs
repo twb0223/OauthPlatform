@@ -3,14 +3,22 @@ using Cache.Redis;
 using Common;
 using Entity;
 using System.Configuration;
+using System.Text;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Service
 {
-    public class OauthService
+    public class OauthService : IOauthService
     {
         private readonly string tokenExpiry = ConfigurationManager.AppSettings["TokenExpiry"].ToString();
         private readonly string codeExpiry = ConfigurationManager.AppSettings["CodeExpiry"].ToString();
-        public bool CreateApp(MircoApp model)
+        IRedisManager ir;
+        public OauthService(IRedisManager ir)
+        {
+            this.ir = ir;
+        }
+        public bool CreateApp(OpenPlatformMicroApplication model)
         {
             //创建Appid，appsecret
             model.AppID = Tools.CreateAppID();
@@ -30,7 +38,7 @@ namespace Service
             }
         }
 
-        public bool UpdateApp(MircoApp model)
+        public bool UpdateApp(OpenPlatformMicroApplication model)
         {
             string strsql = @"Update MircoApp Set AppName=@AppName,Logo=@Logo,AppUrl=@AppUrl,Introduction=@Introduction,IsOpen=@IsOpen where ID=@ID";
             try
@@ -53,9 +61,25 @@ namespace Service
         public bool CheckApp(string Appid, string AppSecret)
         {
             //读取数据库来严重app是否存在
-
-
-            return true;
+            //返回json
+            // {
+            //   "result": {
+            //     "isValidate": true,
+            //    "openPlatformMicroApplication": {
+            //       id": "0257662e-c746-4fb4-94f7-0e1dbd6ccfbf"
+            //    }
+            //                },
+            //  "targetUrl": null,
+            //  "success": true,
+            //  "error": null,
+            //  "unAuthorizedRequest": false,
+            //  "__abp": true
+            //}
+            string parma = "{'appId':'" + Appid + "','appSecret': '" + AppSecret + "'}";
+            var reqresult = Tools.PostWebRequest("http://10.0.5.43:9000/api/services/app/openPlatformMicro/ValidateOpenPlatformMicroApplication", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var result = bool.Parse(jo["result"]["isValidate"].ToString());
+            return result;
         }
         /// <summary>
         /// 获取token
@@ -65,10 +89,9 @@ namespace Service
         public string GetToken(string AppID)
         {
             //找到该appid token
-            var token = RedisManager.GetStringKey(AppID).ToString();
+            var token = ir.GetStringKey(AppID).ToString();
             return token;
         }
-
 
         /// <summary>
         /// 创建token
@@ -87,10 +110,9 @@ namespace Service
             int.TryParse(arr[0], out day);
             int.TryParse(arr[1], out hour);
             int.TryParse(arr[2], out min);
-            int.TryParse(arr[3], out min);
-            TimeSpan ts = new TimeSpan(day, hour, min, ms);//默认是一周过期时间
-
-            RedisManager.SetStringKey(AppID, token, ts);
+            int.TryParse(arr[3], out ms);
+            TimeSpan ts = new TimeSpan(day, hour, min, ms);
+            ir.SetStringKey(AppID, token, ts);
             return token;
         }
         /// <summary>
@@ -101,7 +123,7 @@ namespace Service
         /// <returns></returns>
         public string GetUserCode(string AppID, string UserID)
         {
-            var code = RedisManager.GetStringKey(AppID + "_" + UserID);
+            var code = ir.GetStringKey(AppID + "_" + UserID);
             return code;
         }
         /// <summary>
@@ -122,18 +144,28 @@ namespace Service
             int.TryParse(arr[0], out day);
             int.TryParse(arr[1], out hour);
             int.TryParse(arr[2], out min);
-            int.TryParse(arr[3], out min);
-            TimeSpan ts = new TimeSpan(day, hour, min, ms);//默认是一周过期时间
-
+            int.TryParse(arr[3], out ms);
+            TimeSpan ts = new TimeSpan(day, hour, min, ms);
             //存储code
-            RedisManager.SetStringKey(AppID + "_" + UserID, code, ts);
-
-            //创建OpenID
-            var OpenID = Guid.NewGuid().ToString("N");
-            //写入数据库 todo
-
+            ir.SetStringKey(AppID + "_" + UserID, code, ts);
+            //获取OpenID
+            //返回json
+            //{
+            //"result": {
+            //    "openId": "d196f877e0734e049870272df9b5c315"
+            //},
+            //"targetUrl": null,
+            //"success": true,
+            //"error": null,
+            //"unAuthorizedRequest": false,
+            //"__abp": true
+            //}
+            string parma = "{'userId': '" + UserID + "','openPlatformMicroApplicationId': '" + AppID + "'}";
+            var reqresult = Tools.PostWebRequest("http://10.0.5.43:9000/api/services/app/openUserHeadsService/GetOpenId", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var OpenID = jo["result"]["openId"].ToString();
             //将Code与OpenID的对应关系写入缓存。
-            RedisManager.SetStringKey(code, OpenID, ts);
+            ir.SetStringKey("Code_" + code, OpenID, ts);
             return code;
         }
         /// <summary>
@@ -145,7 +177,7 @@ namespace Service
         public string GetOpenID(string token, string code)
         {
             ///读取缓存得到Openid
-            var OpenID = RedisManager.GetStringKey(code); 
+            var OpenID = ir.GetStringKey(code);
             return OpenID;
         }
         /// <summary>
@@ -156,8 +188,12 @@ namespace Service
         /// <returns></returns>
         public bool CheckTokenAndOpenID(string token, string OpenId)
         {
+            if (string.IsNullOrEmpty(token)||string.IsNullOrEmpty(OpenId))
+            {
+                return false;
+            }
             bool flag = true;
-            var cachetoken = RedisManager.GetStringKey(OpenId).ToString();
+            var cachetoken = ir.GetStringKey(OpenId).ToString();
             if (cachetoken != token)
             {
                 flag = false;

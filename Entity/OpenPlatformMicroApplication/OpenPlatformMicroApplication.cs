@@ -2,10 +2,11 @@
 
 namespace Entity
 {
+  
     /// <summary>
     /// 微应用
     /// </summary>
-    public class MircoApp
+    public class OpenPlatformMicroApplication
     {
         public Guid ID { get; set; }
         /// <summary>

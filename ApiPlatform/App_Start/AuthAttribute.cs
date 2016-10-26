@@ -1,42 +1,41 @@
-﻿using Entity;
+﻿using Autofac.Integration.WebApi;
+using Cache.Redis;
+using Entity;
 using Service;
 using System;
-using System.Web.Mvc;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
 
 namespace ApiPlatform.App_Start
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthAttribute : ActionFilterAttribute
     {
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuting(HttpActionContext oHttpActionContext)
         {
+            HttpContextBase oHttpContextBase = (HttpContextBase)oHttpActionContext.Request.Properties["MS_HttpContext"]; //获取传统context     
+            string sToken = oHttpContextBase.Request.Form["token"]; //先从post里面查
 
-        }
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            //从请求head 中获取token，openid
-            //var head = ((HttpRequestWrapper)((HttpContextWrapper)filterContext.HttpContext).Request).Headers;
-            //var token = head["token"];
-            //var openid = head["openid"];
+            if (string.IsNullOrEmpty(sToken))
+                sToken = oHttpContextBase.Request.QueryString["token"]; //再从get里面查
 
-            //访问具体webapi时进行拦截
-            var token = filterContext.Controller.ValueProvider.GetValue("token").AttemptedValue;
-            var openid = filterContext.Controller.ValueProvider.GetValue("openid").AttemptedValue;
+            string sopenid = oHttpContextBase.Request.Form["openid"]; //先从post里面查
 
-            OauthService os = new OauthService();
-            //如果token,openid 在缓存中有，则返回正常
-            if (os.CheckTokenAndOpenID(token, openid))
+            if (string.IsNullOrEmpty(sopenid))
+                sopenid = oHttpContextBase.Request.QueryString["openid"]; //再从get里面查
+            IRedisManager ir = new RedisManager();
+            IOauthService oa = new OauthService(ir);
+            if (!oa.CheckTokenAndOpenID(sToken, sopenid))
             {
-                base.OnActionExecuting(filterContext);
-            }
-            else
-            {
-                JsonResult result = new JsonResult
-                {
-                    Data = new { StausCode = StausCode.TokenIsOutTime, StatusMsg = StausCode.TokenIsOutTimeMsg }
-                };
-                result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                filterContext.Result = result;
+                HttpResponseMessage oHttpResponseMessage = new HttpResponseMessage();
+                oHttpResponseMessage.Content = new StringContent("{‘StatusCode‘:'" + StausCode.TokenOrOpenIDError + "',‘StatusMsg‘:‘" + StausCode.TokenOrOpenIDErrorMsg + "‘}", Encoding.UTF8, "application/json");
+
+                throw new HttpResponseException(oHttpResponseMessage);
             }
         }
     }

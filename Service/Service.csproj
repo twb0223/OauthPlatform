@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Dapper\DapperHelper.cs" />
     <Compile Include="Dapper\DataBaseHelper.cs" />
+    <Compile Include="IOauthService.cs" />
     <Compile Include="OauthService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
