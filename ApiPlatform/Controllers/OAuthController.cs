@@ -2,6 +2,7 @@
 using System.Web.Http;
 using Service;
 using Entity;
+using ApiPlatform.App_Start;
 
 namespace ApiPlatform.Controllers
 {
@@ -13,6 +14,14 @@ namespace ApiPlatform.Controllers
         {
             this.oa = oa;
         }
+
+        [Route("api/Oauth/Get")]
+        [Auth]
+        public string Get()
+        {
+            return "111";
+        }
+
         [Route("api/Oauth/CreateMicroApp")]
         [HttpPost]
         public OpenPlatformMicroApplicationDto CreateMicroApp(RequestMicroAppDto model)

@@ -32,7 +32,10 @@ namespace ApiPlatform
             var config = GlobalConfiguration.Configuration;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterWebApiFilterProvider(config);
+               builder.RegisterWebApiFilterProvider(config);
+
+           builder.RegisterType<AuthAttribute>().PropertiesAutowired();
+
 
             Assembly repositoryAss = Assembly.Load("Cache");
             Type[] rtypes = repositoryAss.GetTypes();
@@ -44,7 +47,6 @@ namespace ApiPlatform
             builder.RegisterTypes(stypes)
                 .AsImplementedInterfaces();
 
-            builder.RegisterWebApiFilterProvider(config);
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             #endregion
