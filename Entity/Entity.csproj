@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OpenPlatformMicroApplication\OpenPlatformMicroApplication.cs" />
+    <Compile Include="OpenPlatformMicroApplication\RequestMicroAppDto.cs" />
+    <Compile Include="OpenPlatformMicroApplication\RequestMicroAppForUpdateDto.cs" />
     <Compile Include="OpenUserHeads\OpenUserHeads.cs" />
     <Compile Include="ResponeBaseModel.cs" />
     <Compile Include="OpenPlatformMicroApplication\OpenPlatformMicroApplicationDto.cs" />

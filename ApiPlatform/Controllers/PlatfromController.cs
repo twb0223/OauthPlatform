@@ -1,5 +1,4 @@
 ﻿using Entity;
-using Newtonsoft.Json;
 using Service;
 using System.Web.Http;
 
@@ -11,24 +10,6 @@ namespace ApiPlatform.Controllers
         public PlatfromController(IOauthService oa)
         {
             this.oa = oa;
-        }
-        /// <summary>
-        /// 获取OpenID
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [Route("api/Platfrom/GetOpenID")]
-        [HttpPost]
-        public ResponeOpenIDDto GetOpenID(RequestOpenIDDto model)
-        {
-            var openid = oa.GetOpenID(model.Token, model.Code);
-            ResponeOpenIDDto result = new ResponeOpenIDDto
-            {
-                StatusCode = StausCode.Ok,
-                StatusMsg = StausCode.OkMsg,
-                OpenID = openid
-            };
-            return result;
         }
 
         /// <summary>

@@ -2,11 +2,10 @@
 
 namespace Entity
 {
-  
     /// <summary>
     /// 微应用
     /// </summary>
-    public class OpenPlatformMicroApplication
+    public class MircoApp
     {
         public Guid ID { get; set; }
         /// <summary>
@@ -27,8 +26,6 @@ namespace Entity
         /// </summary>
         public string AppUrl { get; set; }
 
-
-        public string BackUrl { get; set; }
         /// <summary>
         /// 创建人ID，即注册开发者平台的用户id
         /// </summary>

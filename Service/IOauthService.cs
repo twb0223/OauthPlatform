@@ -1,4 +1,5 @@
 ﻿using Entity;
+using System;
 
 namespace Service
 {
@@ -9,9 +10,13 @@ namespace Service
         bool CreateApp(OpenPlatformMicroApplication model);
         string CreateToken(string AppID);
         string CreateUserCode(string AppID, string UserID);
-        string GetOpenID(string token, string code);
+        string GetOpenID(string Appid, string token, string code);
         string GetToken(string AppID);
         string GetUserCode(string AppID, string UserID);
         bool UpdateApp(OpenPlatformMicroApplication model);
+
+        TimeSpan? KeyTimeToLive(string key);
+
+
     }
 }

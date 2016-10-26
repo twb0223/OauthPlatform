@@ -17,7 +17,18 @@ namespace Entity
         /// 异常
         /// </summary>
         public const string Exception = "-999";
-        public const string ExceptionMsg = "服务异常";
+        public const string ExceptionMsg = "请求异常";
+
+
+        /// <summary>
+        /// 数据添加异常
+        /// </summary>
+        public const string DataCreteException = "-1000";
+        public const string DataCreateExceptionMsg = "数据添加异常";
+
+        public const string DataUpdateException = "-1001";
+        public const string DataUpdateExceptionMsg = "数据更新异常";
+
 
         /// <summary>
         /// 参数错误

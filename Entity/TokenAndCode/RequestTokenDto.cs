@@ -12,6 +12,6 @@ namespace Entity
 
         public string AppSecret { get; set; }
 
-        public string UserID { get; set; }
+    
     }
 }

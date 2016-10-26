@@ -1,12 +1,8 @@
-﻿using Autofac.Integration.WebApi;
-using Cache.Redis;
+﻿using Cache.Redis;
 using Entity;
 using Service;
-using System;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -28,8 +24,7 @@ namespace ApiPlatform.App_Start
 
             if (string.IsNullOrEmpty(sopenid))
                 sopenid = oHttpContextBase.Request.QueryString["openid"]; //再从get里面查
-            IRedisManager ir = new RedisManager();
-            IOauthService oa = new OauthService(ir);
+            IOauthService oa = new OauthService(new RedisManager());
             if (!oa.CheckTokenAndOpenID(sToken, sopenid))
             {
                 HttpResponseMessage oHttpResponseMessage = new HttpResponseMessage();

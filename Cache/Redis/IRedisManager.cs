@@ -24,5 +24,7 @@ namespace Cache.Redis
         bool SetStringKey(string key, string value, TimeSpan? expiry = default(TimeSpan?));
         bool SetStringKey<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?));
         void StringAppend(string key, string value);
+
+        TimeSpan? KeyTimeToLive(string key);
     }
 }

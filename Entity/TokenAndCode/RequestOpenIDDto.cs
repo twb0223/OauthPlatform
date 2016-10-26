@@ -8,6 +8,7 @@ namespace Entity
 {
     public class RequestOpenIDDto
     {
+        public string AppId { get; set; }
         public string Token { get; set; }
         public string Code { get; set; }
     }

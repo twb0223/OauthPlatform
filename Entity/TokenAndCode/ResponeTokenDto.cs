@@ -9,5 +9,7 @@ namespace Entity
     public class ResponeTokenDto:ResponeBaseModel
     {
         public string Token { get; set; }
+
+        public double ExpiresIn { get; set; }
     }
 }

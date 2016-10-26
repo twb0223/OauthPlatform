@@ -13,6 +13,7 @@ namespace Service
     {
         private readonly string tokenExpiry = ConfigurationManager.AppSettings["TokenExpiry"].ToString();
         private readonly string codeExpiry = ConfigurationManager.AppSettings["CodeExpiry"].ToString();
+        private readonly string platformUrl = ConfigurationManager.AppSettings["PlatfromUrl"].ToString();
         IRedisManager ir;
         public OauthService(IRedisManager ir)
         {
@@ -24,32 +25,24 @@ namespace Service
             model.AppID = Tools.CreateAppID();
             model.AppSecret = Tools.CreateAppSecret();
             model.CreateTime = DateTime.Now.ToShortDateString();
-            // model.PlatformUserID = Guid.NewGuid();
-            string strsql = @"INSERT INTO MircoApp(AppName,Logo,Introduction,AppUrl,AppID,AppSecret,IsOpen,CreateUserID,CreateTime,PlatformUserID)VALUES(
-    @AppName,@Logo,@Introduction,@AppUrl,@AppID,@AppSecret,@IsOpen,@CreateUserID,@CreateTime,@PlatformUserID)";
-            try
-            {
-                int result = DapperHelper.Add(strsql, model);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            //todo 调用添加地址 执行添加
+            return true;
         }
 
         public bool UpdateApp(OpenPlatformMicroApplication model)
         {
-            string strsql = @"Update MircoApp Set AppName=@AppName,Logo=@Logo,AppUrl=@AppUrl,Introduction=@Introduction,IsOpen=@IsOpen where ID=@ID";
-            try
-            {
-                int result = DapperHelper.Update(strsql, model);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            //string strsql = @"Update MircoApp Set AppName=@AppName,Logo=@Logo,AppUrl=@AppUrl,Introduction=@Introduction,IsOpen=@IsOpen where AppID=@ID";
+            //try
+            //{
+            //    int result = DapperHelper.Update(strsql, model);
+            //    return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return false;
+            //}
+            //todo 调用更新地址
+            return true;
         }
 
         /// <summary>
@@ -76,7 +69,10 @@ namespace Service
             //  "__abp": true
             //}
             string parma = "{'appId':'" + Appid + "','appSecret': '" + AppSecret + "'}";
-            var reqresult = Tools.PostWebRequest("http://10.0.5.43:9000/api/services/app/openPlatformMicro/ValidateOpenPlatformMicroApplication", parma, Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(platformUrl + "/api/services/app/openPlatformMicro/ValidateOpenPlatformMicroApplication", parma, Encoding.UTF8);
+
+
+
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = bool.Parse(jo["result"]["isValidate"].ToString());
             return result;
@@ -112,6 +108,7 @@ namespace Service
             int.TryParse(arr[2], out min);
             int.TryParse(arr[3], out ms);
             TimeSpan ts = new TimeSpan(day, hour, min, ms);
+            //存储Appid Token关系
             ir.SetStringKey(AppID, token, ts);
             return token;
         }
@@ -161,11 +158,13 @@ namespace Service
             //"__abp": true
             //}
             string parma = "{'userId': '" + UserID + "','openPlatformMicroApplicationId': '" + AppID + "'}";
-            var reqresult = Tools.PostWebRequest("http://10.0.5.43:9000/api/services/app/openUserHeadsService/GetOpenId", parma, Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(platformUrl + "/api/services/app/openUserHeadsService/GetOpenId", parma, Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var OpenID = jo["result"]["openId"].ToString();
+
             //将Code与OpenID的对应关系写入缓存。
             ir.SetStringKey("Code_" + code, OpenID, ts);
+
             return code;
         }
         /// <summary>
@@ -174,10 +173,16 @@ namespace Service
         /// <param name="token"></param>
         /// <param name="code"></param>
         /// <returns></returns>
-        public string GetOpenID(string token, string code)
+        public string GetOpenID(string Appid, string token, string code)
         {
             ///读取缓存得到Openid
-            var OpenID = ir.GetStringKey(code);
+            //验证token是否过期
+            var otoken = ir.GetStringKey(Appid).ToString();
+            string OpenID = "";
+            if (otoken == token)//没有过期
+            {
+                OpenID = ir.GetStringKey("Code_" + code);
+            }
             return OpenID;
         }
         /// <summary>
@@ -188,7 +193,7 @@ namespace Service
         /// <returns></returns>
         public bool CheckTokenAndOpenID(string token, string OpenId)
         {
-            if (string.IsNullOrEmpty(token)||string.IsNullOrEmpty(OpenId))
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(OpenId))
             {
                 return false;
             }
@@ -199,6 +204,15 @@ namespace Service
                 flag = false;
             }
             return flag;
+        }
+        /// <summary>
+        /// 获取指定key的过期时间
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public TimeSpan? KeyTimeToLive(string key)
+        {
+            return ir.KeyTimeToLive(key);
         }
     }
 }
