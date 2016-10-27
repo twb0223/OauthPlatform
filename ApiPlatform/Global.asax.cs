@@ -32,9 +32,9 @@ namespace ApiPlatform
             var config = GlobalConfiguration.Configuration;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-               builder.RegisterWebApiFilterProvider(config);
-
-           builder.RegisterType<AuthAttribute>().PropertiesAutowired();
+            builder.RegisterWebApiFilterProvider(config);
+          
+            //builder.RegisterType<AuthAttribute>().PropertiesAutowired();
 
 
             Assembly repositoryAss = Assembly.Load("Cache");

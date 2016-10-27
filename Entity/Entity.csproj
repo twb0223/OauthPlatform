@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OpenPlatformMicroApplication\GetOpenPlatformMicroApplicationByConditionInput.cs" />
+    <Compile Include="OpenPlatformMicroApplication\GetOpenPlatformMicroApplicationByConditionOutput.cs" />
     <Compile Include="OpenPlatformMicroApplication\OpenPlatformMicroApplication.cs" />
     <Compile Include="OpenPlatformMicroApplication\RequestMicroAppDto.cs" />
     <Compile Include="OpenPlatformMicroApplication\RequestMicroAppForUpdateDto.cs" />

@@ -202,6 +202,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Controllers\PlatfromController.cs" />
+    <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

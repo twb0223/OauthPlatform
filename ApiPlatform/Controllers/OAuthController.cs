@@ -14,12 +14,36 @@ namespace ApiPlatform.Controllers
         {
             this.oa = oa;
         }
-
         [Route("api/Oauth/Get")]
-        [Auth]
         public string Get()
         {
-            return "111";
+
+            var code = StausCode.Ok;
+            var msg = StausCode.OkMsg;
+
+            OpenPlatformMicroApplication m = new OpenPlatformMicroApplication
+            {
+                Name = "123123",
+                AppUrl = "asdasxcsds",
+                BackUrl = "dsasdasd",
+                CreatorId = Guid.Parse("0257662E-C746-4FB4-94F7-0E1DBD6CCFBF"),
+                Introduction = "asdasdasd",
+                logo = "asdasd",
+                ExamineUserId = Guid.NewGuid(),
+                ExamineTime = DateTime.Now
+            };
+
+            OpenPlatformMicroApplication entity = null;
+            try
+            {
+                entity = oa.CreateApp(m);
+            }
+            catch (Exception ex)
+            {
+                code = StausCode.DataCreteException;
+                msg = StausCode.DataCreateExceptionMsg;
+            }
+            return "sss";
         }
 
         [Route("api/Oauth/CreateMicroApp")]
@@ -30,16 +54,17 @@ namespace ApiPlatform.Controllers
             var msg = StausCode.OkMsg;
             OpenPlatformMicroApplication m = new OpenPlatformMicroApplication
             {
-                AppName = model.AppName,
+                Name = model.AppName,
                 AppUrl = model.AppUrl,
-                BackUrl=model.BackUrl,
-                CreateUserId=model.CreateUserId,
-                Introduction=model.Introduction,
-                Logo=model.Logo
+                BackUrl = model.BackUrl,
+                CreatorId = model.CreateUserId,
+                Introduction = model.Introduction,
+                logo = model.Logo
             };
+            OpenPlatformMicroApplication entity = null;
             try
             {
-                oa.CreateApp(m);
+                entity = oa.CreateApp(m);
 
             }
             catch (Exception)
@@ -51,31 +76,20 @@ namespace ApiPlatform.Controllers
             {
                 StatusCode = code,
                 StatusMsg = msg,
-                OpenPlatformMicroApplication = m
+                OpenPlatformMicroApplication = entity
             };
             return result;
         }
         [Route("api/Oauth/UpdateMicroApp")]
         [HttpPost]
-        public OpenPlatformMicroApplicationDto UpdteMicroApp(RequestMicroAppForUpdateDto model)
+        public OpenPlatformMicroApplicationDto UpdteMicroApp(OpenPlatformMicroApplication model)
         {
             var code = StausCode.Ok;
             var msg = StausCode.OkMsg;
-
-            OpenPlatformMicroApplication m = new OpenPlatformMicroApplication
-            {
-                AppID=model.AppID,
-                AppName = model.AppName,
-                AppUrl = model.AppUrl,
-                BackUrl = model.BackUrl,
-                Introduction = model.Introduction,
-                IsOpen=model.IsOpen,
-                Logo = model.Logo
-            };
-
+            OpenPlatformMicroApplication entity = null;
             try
             {
-                oa.UpdateApp(m);
+                entity = oa.UpdateApp(model);
             }
             catch (Exception)
             {
@@ -86,7 +100,7 @@ namespace ApiPlatform.Controllers
             {
                 StatusCode = code,
                 StatusMsg = msg,
-                OpenPlatformMicroApplication = m
+                OpenPlatformMicroApplication = entity
             };
             return result;
         }

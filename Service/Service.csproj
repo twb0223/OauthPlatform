@@ -53,8 +53,10 @@
     <Compile Include="Dapper\DapperHelper.cs" />
     <Compile Include="Dapper\DataBaseHelper.cs" />
     <Compile Include="IOauthService.cs" />
+    <Compile Include="IResourceService.cs" />
     <Compile Include="OauthService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cache\Cache.csproj">

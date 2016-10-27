@@ -9,11 +9,7 @@ namespace ApiPlatform.Controllers
 {
     public class HomeController : Controller
     {
-        //IOauthService os;
-        //public HomeController(IOauthService os)
-        //{
-        //    this.os = os;
-        //}
+
         public ActionResult Index()
         {
 
@@ -35,8 +31,16 @@ namespace ApiPlatform.Controllers
             //var s = Tools.PostWebRequest("http://10.0.5.43:9000//api/services/app/openPlatformMicro/ValidateOpenPlatformMicroApplication", str, Encoding.UTF8);
             // os.CheckApp("123123123123", "dfdfdfdf");
             // os.CreateUserCode("0257662E-C746-4FB4-94F7-0E1DBD6CCFBF", "0257662E-C746-4FB4-94F7-0E1DBD6CCFBB");
+            //var input = new GetOpenPlatformMicroApplicationByConditionInput
+            //{
+            //    CompanyID = Guid.Parse("1234567E-C746-4FB4-94F7-0E1DBD6FFFFF"),
+            //    ShopID = null,
+            //    DepartmentID = null,
+            //    UserID = null
 
-   
+            //};
+            //var s = irs.GetAllByCondition(input);
+
             return View();
         }
     }

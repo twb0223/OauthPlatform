@@ -13,36 +13,47 @@ namespace Service
     {
         private readonly string tokenExpiry = ConfigurationManager.AppSettings["TokenExpiry"].ToString();
         private readonly string codeExpiry = ConfigurationManager.AppSettings["CodeExpiry"].ToString();
-        private readonly string platformUrl = ConfigurationManager.AppSettings["PlatfromUrl"].ToString();
+
         IRedisManager ir;
         public OauthService(IRedisManager ir)
         {
             this.ir = ir;
         }
-        public bool CreateApp(OpenPlatformMicroApplication model)
+        /// <summary>
+        /// 创建App
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public OpenPlatformMicroApplication CreateApp(OpenPlatformMicroApplication model)
         {
             //创建Appid，appsecret
             model.AppID = Tools.CreateAppID();
             model.AppSecret = Tools.CreateAppSecret();
-            model.CreateTime = DateTime.Now.ToShortDateString();
+            model.CreateTime = DateTime.Now;
+            model.Id = Guid.NewGuid();
+            model.IsExamine = 1;
+            model.IsOpen = 0;
+
             //todo 调用添加地址 执行添加
-            return true;
+            var parma = JsonConvert.SerializeObject(model);
+            var reqresult = Tools.PostWebRequest("http://localhost:6234/api/services/app/openPlatformMicro/CreateNewApp", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var list = jo["result"]["openPlatformMicroApplications"].ToString();
+            return JsonConvert.DeserializeObject<OpenPlatformMicroApplication>(list);
         }
 
-        public bool UpdateApp(OpenPlatformMicroApplication model)
+        /// <summary>
+        /// 更新app
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public OpenPlatformMicroApplication UpdateApp(OpenPlatformMicroApplication model)
         {
-            //string strsql = @"Update MircoApp Set AppName=@AppName,Logo=@Logo,AppUrl=@AppUrl,Introduction=@Introduction,IsOpen=@IsOpen where AppID=@ID";
-            //try
-            //{
-            //    int result = DapperHelper.Update(strsql, model);
-            //    return true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    return false;
-            //}
-            //todo 调用更新地址
-            return true;
+            var parma = JsonConvert.SerializeObject(model);
+            var reqresult = Tools.PostWebRequest("http://localhost:6234/api/services/app/openPlatformMicro/UpdateNewApp", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var list = jo["result"]["openPlatformMicroApplications"].ToString();
+            return JsonConvert.DeserializeObject<OpenPlatformMicroApplication>(list);
         }
 
         /// <summary>
@@ -69,7 +80,7 @@ namespace Service
             //  "__abp": true
             //}
             string parma = "{'appId':'" + Appid + "','appSecret': '" + AppSecret + "'}";
-            var reqresult = Tools.PostWebRequest(platformUrl + "/api/services/app/openPlatformMicro/ValidateOpenPlatformMicroApplication", parma, Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/openPlatformMicro/ValidateOpenPlatformMicroApplication", parma, Encoding.UTF8);
 
 
 
@@ -158,7 +169,7 @@ namespace Service
             //"__abp": true
             //}
             string parma = "{'userId': '" + UserID + "','openPlatformMicroApplicationId': '" + AppID + "'}";
-            var reqresult = Tools.PostWebRequest(platformUrl + "/api/services/app/openUserHeadsService/GetOpenId", parma, Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/openUserHeadsService/GetOpenId", parma, Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var OpenID = jo["result"]["openId"].ToString();
 

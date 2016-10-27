@@ -8,15 +8,15 @@ namespace Entity
     /// </summary>
     public class OpenPlatformMicroApplication
     {
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// app名称
         /// </summary>
-        public string AppName { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// logo
         /// </summary>
-        public string Logo { get; set; }
+        public string logo { get; set; }
         /// <summary>
         /// 介绍
         /// </summary>
@@ -32,11 +32,11 @@ namespace Entity
         /// <summary>
         /// 创建人ID，即注册开发者平台的用户id
         /// </summary>
-        public Guid CreateUserId { get; set; }
+        public Guid CreatorId { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
-        public string CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
         /// <summary>
         /// 是否启用
         /// </summary>
@@ -51,7 +51,13 @@ namespace Entity
         /// </summary>
         public string AppSecret { get; set; }
 
-        public Guid PlatformUserID { get; set; }
+        public Guid ExamineUserId { get; set; }
+
+        public DateTime ExamineTime { get; set; }
+        /// <summary>
+        /// 是否同过审核
+        /// </summary>
+        public int IsExamine { get; set; }
 
 
     }

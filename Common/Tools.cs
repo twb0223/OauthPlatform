@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Net;
 using System.IO;
+using System.Configuration;
 
 namespace Common
 {
@@ -148,6 +149,15 @@ namespace Common
             myResponseStream.Close();
             return retString;
 
+        }
+
+        /// <summary>
+        /// 获取平台域名地址
+        /// </summary>
+        /// <returns></returns>
+        public static string GetPlatformUrl()
+        {
+            return ConfigurationManager.AppSettings["PlatfromUrl"].ToString();
         }
     }
 }
