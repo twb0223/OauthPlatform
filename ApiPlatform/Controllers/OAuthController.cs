@@ -3,6 +3,7 @@ using System.Web.Http;
 using Service;
 using Entity;
 using ApiPlatform.App_Start;
+using Common;
 
 namespace ApiPlatform.Controllers
 {
@@ -14,96 +15,8 @@ namespace ApiPlatform.Controllers
         {
             this.oa = oa;
         }
-        [Route("api/Oauth/Get")]
-        public string Get()
-        {
 
-            var code = StausCode.Ok;
-            var msg = StausCode.OkMsg;
 
-            OpenPlatformMicroApplication m = new OpenPlatformMicroApplication
-            {
-                Name = "123123",
-                AppUrl = "asdasxcsds",
-                BackUrl = "dsasdasd",
-                CreatorId = Guid.Parse("0257662E-C746-4FB4-94F7-0E1DBD6CCFBF"),
-                Introduction = "asdasdasd",
-                logo = "asdasd",
-                ExamineUserId = Guid.NewGuid(),
-                ExamineTime = DateTime.Now
-            };
-
-            OpenPlatformMicroApplication entity = null;
-            try
-            {
-                entity = oa.CreateApp(m);
-            }
-            catch (Exception ex)
-            {
-                code = StausCode.DataCreteException;
-                msg = StausCode.DataCreateExceptionMsg;
-            }
-            return "sss";
-        }
-
-        [Route("api/Oauth/CreateMicroApp")]
-        [HttpPost]
-        public OpenPlatformMicroApplicationDto CreateMicroApp(RequestMicroAppDto model)
-        {
-            var code = StausCode.Ok;
-            var msg = StausCode.OkMsg;
-            OpenPlatformMicroApplication m = new OpenPlatformMicroApplication
-            {
-                Name = model.AppName,
-                AppUrl = model.AppUrl,
-                BackUrl = model.BackUrl,
-                CreatorId = model.CreateUserId,
-                Introduction = model.Introduction,
-                logo = model.Logo
-            };
-            OpenPlatformMicroApplication entity = null;
-            try
-            {
-                entity = oa.CreateApp(m);
-
-            }
-            catch (Exception)
-            {
-                code = StausCode.DataCreteException;
-                msg = StausCode.DataCreateExceptionMsg;
-            }
-            OpenPlatformMicroApplicationDto result = new OpenPlatformMicroApplicationDto
-            {
-                StatusCode = code,
-                StatusMsg = msg,
-                OpenPlatformMicroApplication = entity
-            };
-            return result;
-        }
-        [Route("api/Oauth/UpdateMicroApp")]
-        [HttpPost]
-        public OpenPlatformMicroApplicationDto UpdteMicroApp(OpenPlatformMicroApplication model)
-        {
-            var code = StausCode.Ok;
-            var msg = StausCode.OkMsg;
-            OpenPlatformMicroApplication entity = null;
-            try
-            {
-                entity = oa.UpdateApp(model);
-            }
-            catch (Exception)
-            {
-                code = StausCode.DataCreteException;
-                msg = StausCode.DataCreateExceptionMsg;
-            }
-            OpenPlatformMicroApplicationDto result = new OpenPlatformMicroApplicationDto
-            {
-                StatusCode = code,
-                StatusMsg = msg,
-                OpenPlatformMicroApplication = entity
-            };
-            return result;
-        }
         [Route("api/Oauth/GetToken")]
         [HttpPost]
         public ResponeTokenDto GetToken(RequestTokenDto model)
@@ -172,6 +85,30 @@ namespace ApiPlatform.Controllers
                 StatusCode = code,
                 StatusMsg = msg,
                 OpenID = openid
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// 获取Code
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Route("api/Oauth/GetCode")]
+        [HttpPost]
+        public ResponeCodeDto GetCode(RequstCodeDto model)
+        {
+            string userCode = "";
+            userCode = oa.GetUserCode(model.AppID, model.UserID);
+            if (string.IsNullOrEmpty(userCode))
+            {
+                userCode = oa.CreateUserCode(model.AppID, model.UserID);//创建UserCode 
+            }
+            ResponeCodeDto result = new ResponeCodeDto
+            {
+                StatusCode = StausCode.Ok,
+                StatusMsg = StausCode.OkMsg,
+                Code = userCode
             };
             return result;
         }

@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    public class RequestMicroAppDto
+    /// <summary>
+    /// 更新app时传入model
+    /// </summary>
+    public class UpdateAppInput
     {
-        public string AppName { get; set; }
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
         /// <summary>
         /// logo
         /// </summary>
-        public string Logo { get; set; }
+        public string logo { get; set; }
         /// <summary>
         /// 介绍
         /// </summary>
@@ -22,7 +27,5 @@ namespace Entity
         public string AppUrl { get; set; }
 
         public string BackUrl { get; set; }
-
-        public Guid CreateUserId { get; set; }
     }
 }

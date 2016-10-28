@@ -13,6 +13,10 @@ namespace Entity
         public const string Ok = "0";
         public const string OkMsg = "操作成功";
 
+
+
+
+
         /// <summary>
         /// 异常
         /// </summary>
@@ -29,6 +33,8 @@ namespace Entity
         public const string DataUpdateException = "-1001";
         public const string DataUpdateExceptionMsg = "数据更新异常";
 
+        public const string ParamException = "-3001";
+        public const string ParamExceptionMsg = "请求参数异常";
 
         /// <summary>
         /// 参数错误
@@ -55,5 +61,9 @@ namespace Entity
         /// </summary>
         public const string TokenOrOpenIDError = "2001";
         public const string TokenOrOpenIDErrorMsg = "Token或OpenId无效";
+
+
+        public const string DataNotFound = "2002";
+        public const string DataNotFoundMsg = "请求数据不存在";
     };
 }

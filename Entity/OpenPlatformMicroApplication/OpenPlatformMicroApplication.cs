@@ -2,7 +2,6 @@
 
 namespace Entity
 {
-  
     /// <summary>
     /// 微应用
     /// </summary>

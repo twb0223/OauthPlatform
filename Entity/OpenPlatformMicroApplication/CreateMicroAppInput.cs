@@ -6,27 +6,26 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    public class RequestMicroAppForUpdateDto
+    /// <summary>
+    /// 创建app是传入model
+    /// </summary>
+    public class CreateMicroAppInput
     {
-        public string AppID { get; set; }
-        public string AppName { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// logo
         /// </summary>
-        public string Logo { get; set; }
+        public string logo { get; set; }
         /// <summary>
         /// 介绍
         /// </summary>
         public string Introduction { get; set; }
 
-        public int IsOpen { get; set; }
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public string AppUrl { get; set; }
 
+        public string AppUrl { get; set; }
 
         public string BackUrl { get; set; }
 
+        public Guid CreateUserId { get; set; }
     }
 }

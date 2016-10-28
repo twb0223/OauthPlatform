@@ -40,11 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OpenPlatformMicroApplication\ExamineAppInput.cs" />
+    <Compile Include="OpenPlatformMicroApplication\GetAppInfoDto.cs" />
+    <Compile Include="OpenPlatformMicroApplication\GetAppInfoOutput.cs" />
     <Compile Include="OpenPlatformMicroApplication\GetOpenPlatformMicroApplicationByConditionInput.cs" />
     <Compile Include="OpenPlatformMicroApplication\GetOpenPlatformMicroApplicationByConditionOutput.cs" />
     <Compile Include="OpenPlatformMicroApplication\OpenPlatformMicroApplication.cs" />
-    <Compile Include="OpenPlatformMicroApplication\RequestMicroAppDto.cs" />
-    <Compile Include="OpenPlatformMicroApplication\RequestMicroAppForUpdateDto.cs" />
+    <Compile Include="OpenPlatformMicroApplication\CreateMicroAppInput.cs" />
+    <Compile Include="OpenPlatformMicroApplication\UpdateAppInput.cs" />
+    <Compile Include="OpenPlatformUsers\OpenPlatformUsersDto.cs" />
+    <Compile Include="OpenPlatformUsers\OpenPlatformUsers.cs" />
+    <Compile Include="OpenPlatformUsers\OpenPlatformUsersRegisterOutput.cs" />
     <Compile Include="OpenUserHeads\OpenUserHeads.cs" />
     <Compile Include="ResponeBaseModel.cs" />
     <Compile Include="OpenPlatformMicroApplication\OpenPlatformMicroApplicationDto.cs" />

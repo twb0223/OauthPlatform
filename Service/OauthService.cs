@@ -19,42 +19,6 @@ namespace Service
         {
             this.ir = ir;
         }
-        /// <summary>
-        /// 创建App
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        public OpenPlatformMicroApplication CreateApp(OpenPlatformMicroApplication model)
-        {
-            //创建Appid，appsecret
-            model.AppID = Tools.CreateAppID();
-            model.AppSecret = Tools.CreateAppSecret();
-            model.CreateTime = DateTime.Now;
-            model.Id = Guid.NewGuid();
-            model.IsExamine = 1;
-            model.IsOpen = 0;
-
-            //todo 调用添加地址 执行添加
-            var parma = JsonConvert.SerializeObject(model);
-            var reqresult = Tools.PostWebRequest("http://localhost:6234/api/services/app/openPlatformMicro/CreateNewApp", parma, Encoding.UTF8);
-            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
-            var list = jo["result"]["openPlatformMicroApplications"].ToString();
-            return JsonConvert.DeserializeObject<OpenPlatformMicroApplication>(list);
-        }
-
-        /// <summary>
-        /// 更新app
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        public OpenPlatformMicroApplication UpdateApp(OpenPlatformMicroApplication model)
-        {
-            var parma = JsonConvert.SerializeObject(model);
-            var reqresult = Tools.PostWebRequest("http://localhost:6234/api/services/app/openPlatformMicro/UpdateNewApp", parma, Encoding.UTF8);
-            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
-            var list = jo["result"]["openPlatformMicroApplications"].ToString();
-            return JsonConvert.DeserializeObject<OpenPlatformMicroApplication>(list);
-        }
 
         /// <summary>
         /// 检查app是否存在
@@ -82,8 +46,6 @@ namespace Service
             string parma = "{'appId':'" + Appid + "','appSecret': '" + AppSecret + "'}";
             var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/openPlatformMicro/ValidateOpenPlatformMicroApplication", parma, Encoding.UTF8);
 
-
-
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = bool.Parse(jo["result"]["isValidate"].ToString());
             return result;
@@ -99,7 +61,6 @@ namespace Service
             var token = ir.GetStringKey(AppID).ToString();
             return token;
         }
-
         /// <summary>
         /// 创建token
         /// </summary>
