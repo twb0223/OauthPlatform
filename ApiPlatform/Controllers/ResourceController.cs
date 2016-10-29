@@ -273,7 +273,7 @@ namespace ApiPlatform.Controllers
         public ResponeBaseModel ChangePassowrd(OpenPlatformUserChangePasswordDto model)
         {
             model.NewPassword = Tools.MD5Encrypt(Tools.MD5Encrypt(model.NewPassword));
-            model.OldPassword= Tools.MD5Encrypt(Tools.MD5Encrypt(model.OldPassword));
+            model.OldPassword = Tools.MD5Encrypt(Tools.MD5Encrypt(model.OldPassword));
 
             var code = StausCode.Ok;
             var msg = StausCode.OkMsg;
@@ -298,5 +298,182 @@ namespace ApiPlatform.Controllers
             }
             return new ResponeBaseModel { StatusCode = code, StatusMsg = msg };
         }
+
+        [HttpPost]
+        [Route("api/Resource/AddAuthorization")]
+        public MicroApplicationAuthorizationOutput AddAuthorization(MicroApplicationAuthorizationDto model)
+        {
+            var code = StausCode.Ok;
+            var msg = StausCode.OkMsg;
+            MicroApplicationAuthorization entity = null;
+            try
+            {
+                entity = irs.AddAuthorization(model);
+                if (entity == null)
+                {
+                    code = StausCode.DataCreteException;
+                    msg = StausCode.DataCreateExceptionMsg;
+                }
+            }
+            catch (Exception)
+            {
+                code = StausCode.Exception;
+                msg = StausCode.ExceptionMsg;
+            }
+            return new MicroApplicationAuthorizationOutput
+            {
+                StatusCode = code,
+                StatusMsg = msg,
+                microApplicationAuthorization = entity
+            };
+
+
+        }
+
+        [HttpPost]
+        [Route("api/Resource/UpdateAuthorization")]
+        public MicroApplicationAuthorizationOutput UpdateAuthorization(MicroApplicationAuthorizationDto model)
+        {
+            var code = StausCode.Ok;
+            var msg = StausCode.OkMsg;
+            MicroApplicationAuthorization entity = null;
+            try
+            {
+                entity = irs.UpdateAuthorization(model);
+                if (entity == null)
+                {
+                    code = StausCode.DataUpdateException;
+                    msg = StausCode.DataUpdateExceptionMsg;
+                }
+            }
+            catch (Exception)
+            {
+                code = StausCode.Exception;
+                msg = StausCode.ExceptionMsg;
+            }
+            return new MicroApplicationAuthorizationOutput
+            {
+                StatusCode = code,
+                StatusMsg = msg,
+                microApplicationAuthorization = entity
+            };
+        }
+
+        [Route("api/Resource/DeleteAuthorization")]
+        [HttpGet]
+        public ResponeBaseModel DeleteAuthorization(string Id)
+        {
+            var code = StausCode.Ok;
+            var msg = StausCode.OkMsg;
+            try
+            {
+                var result = irs.DeleteAuthorization(Guid.Parse(Id));
+                if (!result)
+                {
+                    code = StausCode.DataUpdateException;
+                    msg = StausCode.DataUpdateExceptionMsg;
+                }
+            }
+            catch (Exception)
+            {
+                code = StausCode.Exception;
+                msg = StausCode.ExceptionMsg;
+            }
+            return new ResponeBaseModel
+            {
+                StatusCode = code,
+                StatusMsg = msg
+            };
+        }
+
+
+
+        [HttpPost]
+        [Route("api/Resource/AddMicroApplicationVisibleRange")]
+        public MicroApplicationVisibleRangeOutput AddMicroApplicationVisibleRange(MicroApplicationVisibleRangeDto model)
+        {
+            var code = StausCode.Ok;
+            var msg = StausCode.OkMsg;
+            MicroApplicationVisibleRange entity = null;
+            try
+            {
+                entity = irs.AddMicroApplicationVisibleRange(model);
+                if (entity == null)
+                {
+                    code = StausCode.DataCreteException;
+                    msg = StausCode.DataCreateExceptionMsg;
+                }
+            }
+            catch (Exception)
+            {
+                code = StausCode.Exception;
+                msg = StausCode.ExceptionMsg;
+            }
+            return new MicroApplicationVisibleRangeOutput
+            {
+                StatusCode = code,
+                StatusMsg = msg,
+                microApplicationVisibleRange = entity
+            };
+
+
+        }
+
+        [HttpPost]
+        [Route("api/Resource/UpdateMicroApplicationVisibleRange")]
+        public MicroApplicationVisibleRangeOutput UpdateMicroApplicationVisibleRange(MicroApplicationVisibleRangeDto model)
+        {
+            var code = StausCode.Ok;
+            var msg = StausCode.OkMsg;
+            MicroApplicationVisibleRange entity = null;
+            try
+            {
+                entity = irs.UpdateMicroApplicationVisibleRange(model);
+                if (entity == null)
+                {
+                    code = StausCode.DataUpdateException;
+                    msg = StausCode.DataUpdateExceptionMsg;
+                }
+            }
+            catch (Exception)
+            {
+                code = StausCode.Exception;
+                msg = StausCode.ExceptionMsg;
+            }
+            return new MicroApplicationVisibleRangeOutput
+            {
+                StatusCode = code,
+                StatusMsg = msg,
+                microApplicationVisibleRange = entity
+            };
+        }
+
+        [Route("api/Resource/DeleteMicroApplicationVisibleRange")]
+        [HttpGet]
+        public ResponeBaseModel DeleteMicroApplicationVisibleRange(string Id)
+        {
+            var code = StausCode.Ok;
+            var msg = StausCode.OkMsg;
+            try
+            {
+                var result = irs.DeleteMicroApplicationVisibleRange(Guid.Parse(Id));
+                if (!result)
+                {
+                    code = StausCode.DataUpdateException;
+                    msg = StausCode.DataUpdateExceptionMsg;
+                }
+            }
+            catch (Exception)
+            {
+                code = StausCode.Exception;
+                msg = StausCode.ExceptionMsg;
+            }
+            return new ResponeBaseModel
+            {
+                StatusCode = code,
+                StatusMsg = msg
+            };
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Entity;
 
+
 namespace Service
 {
     public interface IResourceService
@@ -14,7 +15,7 @@ namespace Service
         bool DeleteApp(Guid Id);
 
         GetAppInfoDto GetAppInfo(string AppId);
-        
+
         OpenPlatformUsers Register(OpenPlatformUsersRegisterDto model);
 
         bool Login(OpenPlatformUserLoginDto model);
@@ -22,5 +23,14 @@ namespace Service
         bool ChangePassword(OpenPlatformUserChangePasswordDto model);
 
         bool ExamineApp(ExamineAppInput model);
+
+        MicroApplicationAuthorization AddAuthorization(MicroApplicationAuthorizationDto model);
+        MicroApplicationAuthorization UpdateAuthorization(MicroApplicationAuthorizationDto model);
+        bool DeleteAuthorization(Guid Id);
+
+
+        MicroApplicationVisibleRange AddMicroApplicationVisibleRange(MicroApplicationVisibleRangeDto model);
+        MicroApplicationVisibleRange UpdateMicroApplicationVisibleRange(MicroApplicationVisibleRangeDto model);
+        bool DeleteMicroApplicationVisibleRange(Guid Id);
     }
 }

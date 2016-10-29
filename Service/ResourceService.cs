@@ -50,7 +50,7 @@ namespace Service
 
         public bool DeleteApp(Guid Id)
         {
-            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/openPlatformMicro/DeleteApp?Id=" + Id, "", Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/openPlatformMicro/DeleteApp?id=" + Id, "", Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = (bool)jo["success"];
             return result;
@@ -95,6 +95,59 @@ namespace Service
         {
             var parma = JsonConvert.SerializeObject(model);
             var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/openPlatformMicro/ExamineApp", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var result = (bool)jo["result"];
+            return result;
+        }
+
+        public MicroApplicationAuthorization AddAuthorization(MicroApplicationAuthorizationDto model)
+        {
+            var parma = JsonConvert.SerializeObject(model);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationAuthorizationService/AddAuthorization", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var result = jo["result"].ToString();
+            return JsonConvert.DeserializeObject<MicroApplicationAuthorization>(result);
+        }
+
+        public MicroApplicationAuthorization UpdateAuthorization(MicroApplicationAuthorizationDto model)
+        {
+            var parma = JsonConvert.SerializeObject(model);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationAuthorizationService/UpdateAuthorization", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var result = jo["result"].ToString();
+            return JsonConvert.DeserializeObject<MicroApplicationAuthorization>(result);
+        }
+
+        public bool DeleteAuthorization(Guid Id)
+        {
+            //var parma = JsonConvert.SerializeObject(model);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationAuthorizationService/DeleteAuthorization?id=" + Id, "", Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var result = (bool)jo["result"];
+            return result;
+        }
+
+        public MicroApplicationVisibleRange AddMicroApplicationVisibleRange(MicroApplicationVisibleRangeDto model)
+        {
+            var parma = JsonConvert.SerializeObject(model);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationVisibleRangeService/AddMicroApplicationVisibleRange", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var result = jo["result"].ToString();
+            return JsonConvert.DeserializeObject<MicroApplicationVisibleRange>(result);
+        }
+
+        public MicroApplicationVisibleRange UpdateMicroApplicationVisibleRange(MicroApplicationVisibleRangeDto model)
+        {
+            var parma = JsonConvert.SerializeObject(model);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationVisibleRangeService/UpdateMicroApplicationVisibleRange", parma, Encoding.UTF8);
+            JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
+            var result = jo["result"].ToString();
+            return JsonConvert.DeserializeObject<MicroApplicationVisibleRange>(result);
+        }
+
+        public bool DeleteMicroApplicationVisibleRange(Guid Id)
+        {
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationVisibleRangeService/DeleteUpdateMicroApplicationVisibleRange?id=" + Id, "", Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = (bool)jo["result"];
             return result;

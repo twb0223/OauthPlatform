@@ -40,6 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MicroApplicationAuthorization\MicroApplicationAuthorization.cs" />
+    <Compile Include="MicroApplicationAuthorization\MicroApplicationAuthorizationDto.cs" />
+    <Compile Include="MicroApplicationAuthorization\MicroApplicationAuthorizationOutput.cs" />
+    <Compile Include="MicroApplicationVisibleRange\MicroApplicationVisibleRange.cs" />
+    <Compile Include="MicroApplicationVisibleRange\MicroApplicationVisibleRangeDto.cs" />
+    <Compile Include="MicroApplicationVisibleRange\MicroApplicationVisibleRangeOutput.cs" />
     <Compile Include="OpenPlatformMicroApplication\ExamineAppInput.cs" />
     <Compile Include="OpenPlatformMicroApplication\GetAppInfoDto.cs" />
     <Compile Include="OpenPlatformMicroApplication\GetAppInfoOutput.cs" />
@@ -63,6 +69,7 @@
     <Compile Include="TokenAndCode\ResponeOpenIDDto.cs" />
     <Compile Include="TokenAndCode\ResponeTokenDto.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
