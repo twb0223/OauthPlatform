@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
+    /// <summary>
+    /// 应用授权
+    /// </summary>
     public class MicroApplicationAuthorization
     {
         public Guid Id { get; set; }

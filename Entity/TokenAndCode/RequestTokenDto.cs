@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
+    /// <summary>
+    /// Token请求对象
+    /// </summary>
     public class RequestTokenDto
     {
+
         public string AppId { get; set; }
 
         public string AppSecret { get; set; }

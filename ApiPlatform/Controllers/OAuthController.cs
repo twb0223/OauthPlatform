@@ -23,7 +23,11 @@ namespace ApiPlatform.Controllers
         //  var s=  oa.GetUserCode("123123123123", "0257662E-C746-4FB4-94F7-0E1DBD6CCFBF");
         //    return s;
         //}
-
+        /// <summary>
+        /// 获取Token
+        /// </summary>
+        /// <param name="model">请求参数对象</param>
+        /// <returns>返回结果JSON</returns>
         [Route("api/Oauth/GetToken")]
         [HttpPost]
         public ResponeTokenDto GetToken(RequestTokenDto model)
@@ -72,7 +76,7 @@ namespace ApiPlatform.Controllers
         /// <summary>
         /// 获取OpenID
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">请求参数对象</param>
         /// <returns></returns>
         [Route("api/Oauth/GetOpenID")]
         [HttpPost]
