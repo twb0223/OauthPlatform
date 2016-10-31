@@ -41,7 +41,7 @@ namespace ApiPlatform.Controllers
             //};
             //var s = irs.GetAllByCondition(input);
 
-            return View();
+            return RedirectToAction("../Help");
         }
     }
 }

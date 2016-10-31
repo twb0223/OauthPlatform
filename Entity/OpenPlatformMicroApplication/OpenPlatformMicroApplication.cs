@@ -52,7 +52,7 @@ namespace Entity
 
         public Guid ExamineUserId { get; set; }
 
-        public DateTime ExamineTime { get; set; }
+        public DateTime? ExamineTime { get; set; }
         /// <summary>
         /// 是否同过审核
         /// </summary>

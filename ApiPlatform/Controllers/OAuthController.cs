@@ -7,7 +7,7 @@ using Common;
 
 namespace ApiPlatform.Controllers
 {
-
+ 
     public class OAuthController : ApiController
     {
         IOauthService oa;
@@ -15,7 +15,14 @@ namespace ApiPlatform.Controllers
         {
             this.oa = oa;
         }
+        //[Route("api/Oauth/get")]
+        //public string GetCode()
+        //{
+        //    oa.CreateUserCode("123123123123", "0257662E-C746-4FB4-94F7-0E1DBD6CCFBF");
 
+        //  var s=  oa.GetUserCode("123123123123", "0257662E-C746-4FB4-94F7-0E1DBD6CCFBF");
+        //    return s;
+        //}
 
         [Route("api/Oauth/GetToken")]
         [HttpPost]

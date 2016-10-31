@@ -20,7 +20,7 @@ namespace ApiPlatform.Controllers
             this.irs = _irs;
         }
         //[Route("api/Resource/Get")]
-        //public ResponeBaseModel Get()
+        //public MicroApplicationVisibleRangeOutput Get()
         //{
         //    //OpenPlatformUsersRegisterDto model = new OpenPlatformUsersRegisterDto();
         //    //model.UserName = "Test";
@@ -70,21 +70,53 @@ namespace ApiPlatform.Controllers
         //    //}
         //    //return new ResponeBaseModel { StatusCode = code, StatusMsg = msg };
 
-        //    var model = new OpenPlatformUserChangePasswordDto();
-        //    model.UserName = "Test";
-        //    model.OldPassword = "123456";
-        //    model.NewPassword = "qqqqqq";
-        //    model.NewPassword = Tools.MD5Encrypt(Tools.MD5Encrypt(model.NewPassword));
-        //    model.OldPassword = Tools.MD5Encrypt(Tools.MD5Encrypt(model.OldPassword));
+        //    //var model = new OpenPlatformUserChangePasswordDto();
+        //    //model.UserName = "Test";
+        //    //model.OldPassword = "123456";
+        //    //model.NewPassword = "qqqqqq";
+        //    //model.NewPassword = Tools.MD5Encrypt(Tools.MD5Encrypt(model.NewPassword));
+        //    //model.OldPassword = Tools.MD5Encrypt(Tools.MD5Encrypt(model.OldPassword));
+
+        //    //var code = StausCode.Ok;
+        //    //var msg = StausCode.OkMsg;
+        //    //if (!irs.ChangePassword(model))
+        //    //{
+        //    //    code = StausCode.DataUpdateException;
+        //    //    msg = StausCode.DataUpdateExceptionMsg;
+        //    //}
+        //    //return new ResponeBaseModel { StatusCode = code, StatusMsg = msg };
+
+
+        //    MicroApplicationVisibleRangeDto mar = new MicroApplicationVisibleRangeDto();
+        //    mar.Company_Id = Guid.Parse("1234567E-C746-4FB4-94F7-0E1DBD6FFFFF");
+        //    mar.OpenPlatformMicroApplication_Id = Guid.Parse("0257662E-C746-4FB4-94F7-0E1DBD6CCFBF");
+
+        //    mar.AdminUserId = Guid.Parse("0257662E-C746-4FB4-94F7-0E1DBD6CCFBF");
+           
 
         //    var code = StausCode.Ok;
         //    var msg = StausCode.OkMsg;
-        //    if (!irs.ChangePassword(model))
+        //    MicroApplicationVisibleRange entity = null;
+        //    try
         //    {
-        //        code = StausCode.DataUpdateException;
-        //        msg = StausCode.DataUpdateExceptionMsg;
+        //        entity = irs.AddMicroApplicationVisibleRange(mar);
+        //        if (entity == null)
+        //        {
+        //            code = StausCode.DataCreteException;
+        //            msg = StausCode.DataCreateExceptionMsg;
+        //        }
         //    }
-        //    return new ResponeBaseModel { StatusCode = code, StatusMsg = msg };
+        //    catch (Exception)
+        //    {
+        //        code = StausCode.Exception;
+        //        msg = StausCode.ExceptionMsg;
+        //    }
+        //    return new MicroApplicationVisibleRangeOutput
+        //    {
+        //        StatusCode = code,
+        //        StatusMsg = msg,
+        //        microApplicationVisibleRange = entity
+        //    };
 
         //}
 
@@ -385,8 +417,6 @@ namespace ApiPlatform.Controllers
                 StatusMsg = msg
             };
         }
-
-
 
         [HttpPost]
         [Route("api/Resource/AddMicroApplicationVisibleRange")]

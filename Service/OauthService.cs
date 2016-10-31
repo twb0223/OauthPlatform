@@ -129,7 +129,15 @@ namespace Service
             //"unAuthorizedRequest": false,
             //"__abp": true
             //}
-            string parma = "{'userId': '" + UserID + "','openPlatformMicroApplicationId': '" + AppID + "'}";
+
+            //先获取appinfo 信息
+
+            var reqresult1 = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/openPlatformMicro/GetAppInfo?AppId=" + AppID, "", Encoding.UTF8);
+            JObject jo1 = (JObject)JsonConvert.DeserializeObject(reqresult1);
+            var pkid = jo1["result"]["id"].ToString();
+
+
+            string parma = "{'userId': '" + UserID + "','openPlatformMicroApplicationId': '" + pkid + "'}";
             var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/openUserHeadsService/GetOpenId", parma, Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var OpenID = jo["result"]["openId"].ToString();

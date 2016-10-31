@@ -12,6 +12,7 @@ using ApiPlatform.App_Start;
 using Autofac.Integration.WebApi;
 using Autofac.Integration.Mvc;
 using ApiPlatform.Controllers;
+using System.Web.Http.Cors;
 
 namespace ApiPlatform
 {
@@ -50,6 +51,9 @@ namespace ApiPlatform
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             #endregion
+
+            //var cors = new EnableCorsAttribute("*", "*", "*");
+            //config.EnableCors(cors);
         }
     }
 }

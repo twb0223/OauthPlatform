@@ -103,7 +103,7 @@ namespace Service
         public MicroApplicationAuthorization AddAuthorization(MicroApplicationAuthorizationDto model)
         {
             var parma = JsonConvert.SerializeObject(model);
-            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationAuthorizationService/AddAuthorization", parma, Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/microApplicationAuthorizationService/AddAuthorization", parma, Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = jo["result"].ToString();
             return JsonConvert.DeserializeObject<MicroApplicationAuthorization>(result);
@@ -112,7 +112,7 @@ namespace Service
         public MicroApplicationAuthorization UpdateAuthorization(MicroApplicationAuthorizationDto model)
         {
             var parma = JsonConvert.SerializeObject(model);
-            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationAuthorizationService/UpdateAuthorization", parma, Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/microApplicationAuthorizationService/UpdateAuthorization", parma, Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = jo["result"].ToString();
             return JsonConvert.DeserializeObject<MicroApplicationAuthorization>(result);
@@ -121,7 +121,7 @@ namespace Service
         public bool DeleteAuthorization(Guid Id)
         {
             //var parma = JsonConvert.SerializeObject(model);
-            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationAuthorizationService/DeleteAuthorization?id=" + Id, "", Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/microApplicationAuthorizationService/DeleteAuthorization?id=" + Id, "", Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = (bool)jo["result"];
             return result;
@@ -130,7 +130,7 @@ namespace Service
         public MicroApplicationVisibleRange AddMicroApplicationVisibleRange(MicroApplicationVisibleRangeDto model)
         {
             var parma = JsonConvert.SerializeObject(model);
-            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationVisibleRangeService/AddMicroApplicationVisibleRange", parma, Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/microApplicationVisibleRangeService/AddMicroApplicationVisibleRange", parma, Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = jo["result"].ToString();
             return JsonConvert.DeserializeObject<MicroApplicationVisibleRange>(result);
@@ -139,7 +139,7 @@ namespace Service
         public MicroApplicationVisibleRange UpdateMicroApplicationVisibleRange(MicroApplicationVisibleRangeDto model)
         {
             var parma = JsonConvert.SerializeObject(model);
-            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationVisibleRangeService/UpdateMicroApplicationVisibleRange", parma, Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/microApplicationVisibleRangeService/UpdateMicroApplicationVisibleRange", parma, Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = jo["result"].ToString();
             return JsonConvert.DeserializeObject<MicroApplicationVisibleRange>(result);
@@ -147,7 +147,7 @@ namespace Service
 
         public bool DeleteMicroApplicationVisibleRange(Guid Id)
         {
-            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "api/services/app/microApplicationVisibleRangeService/DeleteUpdateMicroApplicationVisibleRange?id=" + Id, "", Encoding.UTF8);
+            var reqresult = Tools.PostWebRequest(Tools.GetPlatformUrl() + "/api/services/app/microApplicationVisibleRangeService/DeleteUpdateMicroApplicationVisibleRange?id=" + Id, "", Encoding.UTF8);
             JObject jo = (JObject)JsonConvert.DeserializeObject(reqresult);
             var result = (bool)jo["result"];
             return result;
